@@ -405,13 +405,20 @@ function loadDashboard(csv) {
 }
 
 function showFilePicker(message) {
-  byId("estado").textContent = message;
+  const status = byId("estado");
+  status.textContent = message;
+  status.classList.remove("is-loading");
+  status.hidden = false;
   byId("archivo-local").hidden = false;
 }
 
 byId("archivo").addEventListener("change", async event => {
   const file = event.target.files[0];
   if (!file) return;
+  const status = byId("estado");
+  status.textContent = "Cargando datos…";
+  status.classList.add("is-loading");
+  status.hidden = false;
   try {
     loadDashboard(await file.text());
   } catch (error) {

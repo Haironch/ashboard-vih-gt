@@ -124,3 +124,30 @@ td a { color: var(--accent); }
 
 .developer-credit { margin-top: 22px; padding-top: 13px; border-top: 1px solid #537189; color: #d4e2ef; font-size: .85rem; }
 .developer-credit a { color: #aff0e5; font-weight: 700; text-underline-offset: 3px; }
+
+.load-status.is-loading {
+  padding: 16px 18px;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.load-status.is-loading::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  height: 3px;
+  background: var(--teal);
+  animation: dashboard-loading 1.2s ease-in-out infinite;
+}
+@keyframes dashboard-loading {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(334%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .load-status.is-loading::after { animation: none; }
+}
