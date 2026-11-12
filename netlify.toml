@@ -1,0 +1,3 @@
+[build]
+  command = "mkdir -p dist && cp -R Frontend/. dist/ && cp Data/observaciones.csv dist/datos.csv"
+  publish = "dist"

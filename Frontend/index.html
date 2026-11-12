@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VIH en Guatemala</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script src="dashboard.js" defer></script>
+  <script src="mapa.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="frame brand"><span class="mark" aria-hidden="true">+</span> Vigilancia epidemiológica <a href="#fuentes">Fuentes de datos ↓</a></div>
+    <div class="frame intro">
+      <h1>VIH en Guatemala</h1>
+      <p id="descripcion-vista">Consultá los diagnósticos notificados y sus tasas por departamento de residencia.</p>
+    </div>
+  </header>
+  <main class="frame">
+    <nav id="vistas" class="tabs" aria-label="Vistas del dashboard">
+      <button data-view="vigilancia" aria-pressed="true">Vigilancia</button>
+      <button data-view="mortalidad" aria-pressed="false">Mortalidad</button>
+      <button data-view="tamizaje" aria-pressed="false">Tamizaje</button>
+      <button data-view="atencion" aria-pressed="false">Atención</button>
+      <button data-view="perfil" aria-pressed="false">Perfil de los casos</button>
+      <button data-view="estimaciones" aria-pressed="false">Estimaciones y metas</button>
+    </nav>
+    <p id="estado" role="status">Cargando datos…</p>
+    <p id="archivo-local" hidden><label for="archivo">Archivo de datos <input id="archivo" type="file" accept=".csv,text/csv"></label></p>
+    <div id="dashboard" hidden>
+      <section id="resumen" class="cards" aria-label="Resumen nacional"></section>
+      <section id="comparacion" class="panel comparison" aria-labelledby="titulo-comparacion" hidden>
+        <div class="section-head">
+          <div><h2 id="titulo-comparacion">Notificaciones por mes</h2><p class="muted">EPIWEB · Guatemala · enero a septiembre</p></div>
+          <span id="variacion" class="delta"></span>
+        </div>
+        <div class="legend"><span><i class="key prior"></i>2025</span><span><i class="key recent"></i>2026</span></div>
+        <div id="comparacion-mensual" class="monthly"></div>
+      </section>
+      <section class="panel explorer" aria-labelledby="explorar">
+        <div class="section-head"><h2 id="explorar">Explorar datos</h2><button id="reset" class="reset">Restablecer filtros</button></div>
+        <div id="filtros" class="filters"></div>
+      </section>
+      <section id="mapa-panel" class="panel" aria-labelledby="titulo-mapa" hidden>
+        <div class="section-head"><h2 id="titulo-mapa">Mapa de calor departamental</h2></div>
+        <p id="mapa-contexto" class="muted"></p>
+        <div id="mapa-superficie"></div>
+        <div id="mapa-leyenda" class="map-legend" aria-label="Escala de color"></div>
+        <p id="mapa-detalle" class="muted" aria-live="polite"></p>
+      </section>
+      <section class="panel" aria-labelledby="titulo-grafica">
+        <div class="section-head"><h2 id="titulo-grafica">Gráfica</h2><span id="unidad" class="muted"></span></div>
+        <p id="nota" class="muted"></p>
+        <div id="grafica" class="chart"></div>
+      </section>
+      <section class="panel" aria-labelledby="titulo-tabla">
+        <div class="section-head"><h2 id="titulo-tabla">Observaciones</h2><span id="conteo" class="muted" aria-live="polite"></span></div>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de observaciones con desplazamiento horizontal"><table><thead><tr><th>Período</th><th>Territorio</th><th>Desglose</th><th class="number">Valor</th><th>Fuente y referencia</th></tr></thead><tbody id="filas"></tbody></table></div>
+        <div class="pagination"><button id="anterior">Anterior</button><span id="pagina"></span><button id="siguiente">Siguiente</button></div>
+      </section>
+    </div>
+  </main>
+  <footer id="fuentes" class="footer">
+    <div class="frame">
+      <h2>Fuentes de datos</h2>
+      <div class="credits">
+        <section>
+          <h3>Ministerio de Salud Pública y Asistencia Social</h3>
+          <p>Informes de vigilancia de Guatemala. Incluyen cifras de EPIWEB, SIGSA y RENAP según el cuadro.</p>
+          <a href="https://epidemiologia.mspas.gob.gt/informacion/vigilancia-epidemiologica/salas-situacionales/12-vih-its-hepatitis">Sala Situacional del MSPAS ↗</a>
+        </section>
+        <section>
+          <h3>ONUSIDA</h3>
+          <p>Estimaciones, datos reportados y metas para Guatemala en la edición 2026.</p>
+          <a href="https://aidsinfo.unaids.org/dataset">Base de datos AIDSinfo ↗</a>
+        </section>
+        <section>
+          <h3>Banco Mundial</h3>
+          <p>Serie nacional de nuevas infecciones estimadas por ONUSIDA, de 1990 a 2024.</p>
+          <a href="https://data.worldbank.org/indicator/SH.HIV.INCD.TL?locations=GT">Indicador SH.HIV.INCD.TL ↗</a>
+        </section>
+      </div>
+      <p class="map-credit">Límites departamentales: <a href="https://www.geoboundaries.org/api/current/gbOpen/GTM/ADM1/">geoBoundaries</a> · <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a> (ODbL 1.0).</p>
+    </div>
+  </footer>
+</body>
+</html>
