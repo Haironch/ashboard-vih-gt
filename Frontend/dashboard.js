@@ -406,21 +406,31 @@ function loadDashboard(csv) {
 
 function showFilePicker(message) {
   const status = byId("estado");
-  status.textContent = message;
+  byId("estado-mensaje").textContent = message;
   status.classList.remove("is-loading");
   status.hidden = false;
   byId("archivo-local").hidden = false;
+}
+
+async function finishLoading(csvPromise) {
+  const started = performance.now();
+  const csv = await csvPromise;
+  const remaining = 650 - (performance.now() - started);
+  if (remaining > 0 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    await new Promise(resolve => setTimeout(resolve, remaining));
+  }
+  loadDashboard(csv);
 }
 
 byId("archivo").addEventListener("change", async event => {
   const file = event.target.files[0];
   if (!file) return;
   const status = byId("estado");
-  status.textContent = "Cargando datos…";
+  byId("estado-mensaje").textContent = "Cargando datos…";
   status.classList.add("is-loading");
   status.hidden = false;
   try {
-    loadDashboard(await file.text());
+    await finishLoading(file.text());
   } catch (error) {
     console.error(error);
     showFilePicker("Elegí el archivo Data/observaciones.csv del proyecto.");
@@ -430,14 +440,11 @@ byId("archivo").addEventListener("change", async event => {
 if (location.protocol === "file:") {
   showFilePicker("Seleccioná el CSV consolidado para ver el dashboard.");
 } else {
-  fetch("/datos.csv")
-    .then(response => {
-      if (!response.ok) throw new Error("HTTP " + response.status);
-      return response.text();
-    })
-    .then(loadDashboard)
-    .catch(error => {
-      console.error(error);
-      showFilePicker("No se pudo cargar el CSV desde el servidor. Podés seleccionarlo manualmente.");
-    });
+  finishLoading(fetch("/datos.csv").then(response => {
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return response.text();
+  })).catch(error => {
+    console.error(error);
+    showFilePicker("No se pudo cargar el CSV desde el servidor. Podés seleccionarlo manualmente.");
+  });
 }

@@ -27,7 +27,11 @@
       <button data-view="perfil" aria-pressed="false">Perfil de los casos</button>
       <button data-view="estimaciones" aria-pressed="false">Estimaciones y metas</button>
     </nav>
-    <p id="estado" class="load-status is-loading" role="status">Cargando datos…</p>
+    <div id="estado" class="load-status is-loading" role="status">
+      <div class="loading-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <strong class="loading-title" aria-hidden="true">VIH en Guatemala</strong>
+      <span id="estado-mensaje">Cargando datos…</span>
+    </div>
     <p id="archivo-local" hidden><label for="archivo">Archivo de datos <input id="archivo" type="file" accept=".csv,text/csv"></label></p>
     <div id="dashboard" hidden>
       <section id="resumen" class="cards" aria-label="Resumen nacional"></section>
